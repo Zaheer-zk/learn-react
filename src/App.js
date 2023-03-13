@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import './App.css';
 import ComA from './components/ComA';
-import CreateContext from './components/CreateContext';
+
+const AppState = createContext();
 
 function App() {
   //Props dealing will not work properly for long data passing so here we can use context which help to solve props dealing.
@@ -9,13 +10,20 @@ function App() {
   // data -> com 3 using context api
 
   const [data, setData] = useState('passedData');
+  const [name, setName] = useState({ name: 'Zaheer', data: data });
 
   return (
-    <div className="App">
-      Context API & useContext
-      <ComA data={data} />
-    </div>
+    <>
+      {/* By using context api */}
+      <AppState.Provider value={{ data, name }}>
+        <div className="App">
+          Context API & useContext
+          <ComA data={data} />
+        </div>
+      </AppState.Provider>
+    </>
   );
 }
 
 export default App;
+export { AppState };
